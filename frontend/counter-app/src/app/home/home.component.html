@@ -1,0 +1,25 @@
+<div class="container mat-body" [style.background-color]="backgroundColor">
+    <mat-toolbar>
+        <span>Counter App</span>
+        <div class="link-btns">
+            <button mat-button class="example-icon" routerLink="/up" >
+                Up
+                <mat-icon class="material-symbols-outlined">arrow_upward</mat-icon>
+            </button>
+            <button mat-button class="example-icon" routerLink="/down">
+                Down
+                <mat-icon class="material-symbols-outlined">arrow_downward</mat-icon>
+            </button>
+        </div>
+        <button mat-button class="reset-btn" routerLink="/reset">
+            Reset
+            <mat-icon class="material-symbols-outlined">restart_alt</mat-icon>
+        </button>
+    </mat-toolbar>
+    <div class="header">
+        <div class="counter">
+            Counter : {{ counter }}
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --error-color: #821A1A;
+    --error-bg-color: #FFDFDF;
+    --success-color: #0eb472;
+    --info-color: #4072b4;
+    --warning-color: #faa307;
+}
+
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Rubik, "Helvetica Neue", sans-serif;
+}
+
+.snackbar-error {
+    --mdc-snackbar-container-color: var(--error-color);
+}
+
+.snackbar-success {
+    --mdc-snackbar-container-color: var(--success-color);
+}
+
+.snackbar-info {
+    --mdc-snackbar-container-color: var(--info-color);
+}
+
+.snackbar-warning {
+    --mdc-snackbar-container-color: var(--warning-color);
+}

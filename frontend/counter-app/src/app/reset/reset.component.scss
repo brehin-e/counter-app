@@ -1,0 +1,13 @@
+.container {
+    display: flex;
+    width: 100%;
+    height: inherit;
+
+}
+
+.reset-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin: auto;
+}

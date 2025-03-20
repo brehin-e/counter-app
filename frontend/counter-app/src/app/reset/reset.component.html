@@ -1,0 +1,12 @@
+<div class="container">
+    <form class="reset-form" (submit)="reset()" [formGroup]="resetForm">
+        <mat-form-field >
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <button mat-flat-button type="submit" [disabled]="resetForm.invalid">Validate</button>
+    </form>
+</div>

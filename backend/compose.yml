@@ -1,0 +1,82 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    networks:
+      - ca-net
+
+  django-api:
+    build: .
+    container_name: django-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8080"
+    networks:
+      - ca-net
+
+  counter-app:
+    image: node:${NODE_VERSION}
+    container_name: counter-app
+    ports:
+      - 4200:4200
+    env_file:
+      - ./.env
+    volumes:
+      - ../frontend/counter-app:/app/
+    working_dir: /app/
+    command: npm start
+    restart: on-failure
+    networks:
+      - ca-net
+
+  redis:
+    image: "redis:latest"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ca-net
+
+  celery:
+    build: .
+    container_name: celery_worker
+    command: celery -A backend worker --loglevel=info
+    depends_on:
+      - redis
+      - django-api
+    networks:
+      - ca-net
+
+  celery-beat:
+    build: .
+    container_name: celery_beat
+    command: celery -A backend beat --loglevel=info
+    depends_on:
+      - redis
+      - django-api
+      - celery
+    networks:
+      - ca-net
+
+volumes:
+  postgres_data:
+
+
+networks:
+  ca-net:
+    driver: bridge
