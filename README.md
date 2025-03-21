@@ -66,6 +66,12 @@ Ensure you have the following installed:
 | `/api/cities`   | `GET`  | Get all cities |
 | `/api/search/:Name` | `GET` | Seacrh a specific city by name |
 
+## Tests
+- To start the tests in backend, just start:
+   ```sh
+   make test
+   ```
+
 ## Notes
 - The app should be free of browser console errors.
 - Users always land on the `/up` page by default.

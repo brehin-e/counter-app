@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CounterService } from '../counter.service';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset',
@@ -28,13 +29,13 @@ export class ResetComponent {
     date: new FormControl('', [Validators.required]),
   });
 
-  constructor(private counterService: CounterService) {
+  constructor(private router: Router, private counterService: CounterService) {
 
   }
 
   reset() {
-    console.log(this.resetForm.getRawValue());
     this.counterService.reset();
     this.resetForm.patchValue({ date: '' })
+    this.router.navigateByUrl('/up')
   }
 }

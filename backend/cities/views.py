@@ -18,26 +18,3 @@ def get_cities_by_name(request, name):
     else:
         return JsonResponse({ "message": "No Cities found" }, status=404)
 
-
-def update_cities(request):
-    # Manually trigger update from government API
-
-    # Here codeRegion is 11 for Ile de France
-    response = requests.get('https://geo.api.gouv.fr/communes?codeRegion=11')
-    data = response.json()
-
-    # Remove duplicate cities
-    unique = {each['nom']: each for each in data}.values()
-
-    for city in unique:
-        City.objects.update_or_create(
-            name=city['nom'],
-            defaults={
-                'postal_codes': city['codesPostaux'],
-                'name': city['nom'],
-                'population': city['population'],
-                'region_code': city['codeRegion']
-            }
-        )
-
-    return JsonResponse({"message": "Cities updated !"})
